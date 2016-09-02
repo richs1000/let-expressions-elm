@@ -1,0 +1,169 @@
+var _user$project$Question$findFeedback = F3(
+	function (answer, response, distractors) {
+		findFeedback:
+		while (true) {
+			var _p0 = distractors;
+			if (_p0.ctor === '[]') {
+				return A2(_elm_lang$core$Basics_ops['++'], 'Incorrect. The answer is ', answer);
+			} else {
+				var _p1 = _p0._0;
+				if (_elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Basics$fst(_p1),
+					response) || _elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Basics$fst(_p1),
+					'')) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$snd(_p1),
+						A2(_elm_lang$core$Basics_ops['++'], ' The answer is ', answer));
+				} else {
+					var _v1 = answer,
+						_v2 = response,
+						_v3 = _p0._1;
+					answer = _v1;
+					response = _v2;
+					distractors = _v3;
+					continue findFeedback;
+				}
+			}
+		}
+	});
+var _user$project$Question$silly1 = F6(
+	function (z, b, c, d, f, h) {
+		var x = (_elm_lang$core$Native_Utils.cmp(z, b) > 0) ? z : c;
+		var y = (x + z) + d;
+		return (_elm_lang$core$Native_Utils.cmp(x, h) > 0) ? (x * f) : (y * y);
+	});
+var _user$project$Question$Question = F4(
+	function (a, b, c, d) {
+		return {question: a, distractors: b, answer: c, format: d};
+	});
+var _user$project$Question$MultipleChoice = {ctor: 'MultipleChoice'};
+var _user$project$Question$newQuestion = F2(
+	function (randomValues, index) {
+		var h = A3(
+			_user$project$RandomStuff$pickOne,
+			A2(_elm_lang$core$List$drop, 5, randomValues),
+			_elm_lang$core$Native_List.range(2, 4),
+			1);
+		var g = A3(
+			_user$project$RandomStuff$pickOne,
+			A2(_elm_lang$core$List$drop, 4, randomValues),
+			_elm_lang$core$Native_List.range(1, 4),
+			1);
+		var f = A3(
+			_user$project$RandomStuff$pickOne,
+			A2(_elm_lang$core$List$drop, 3, randomValues),
+			_elm_lang$core$Native_List.range(0, 4),
+			1);
+		var d = A3(
+			_user$project$RandomStuff$pickOne,
+			A2(_elm_lang$core$List$drop, 2, randomValues),
+			_elm_lang$core$Native_List.range(0, 4),
+			1);
+		var c = A3(
+			_user$project$RandomStuff$pickOne,
+			A2(_elm_lang$core$List$drop, 1, randomValues),
+			_elm_lang$core$Native_List.range(0, 4),
+			1);
+		var b = A3(
+			_user$project$RandomStuff$pickOne,
+			randomValues,
+			_elm_lang$core$Native_List.range(0, 4),
+			1);
+		var question$ = _elm_lang$core$Native_List.fromArray(
+			[
+				'What is the value of ans after the following ML expressions are evaluated?',
+				'',
+				'fun silly1 (z : int) =',
+				'    let',
+				A2(
+				_elm_lang$core$Basics_ops['++'],
+				'        val x = if z > ',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(b),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' then z else ',
+						_elm_lang$core$Basics$toString(c)))),
+				A2(
+				_elm_lang$core$Basics_ops['++'],
+				'        val y = x + z + ',
+				_elm_lang$core$Basics$toString(d)),
+				'    in',
+				A2(
+				_elm_lang$core$Basics_ops['++'],
+				'        if x > ',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(h),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' then x * ',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(f),
+							' else y * y')))),
+				'',
+				A2(
+				_elm_lang$core$Basics_ops['++'],
+				'val ans = silly1(',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(g),
+					')')),
+				''
+			]);
+		var answer$ = _elm_lang$core$Basics$toString(
+			A6(_user$project$Question$silly1, g, b, c, d, f, h));
+		var distractors = _elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$core$Basics$toString(g),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, h, b, c, d, f, g)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, c, h, b, d, f, g)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, f, d, h, c, b, g)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, d, c, b, h, f, g)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, g, c, d, f, h, b)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, f, d, c, g, b, h)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, b, g, d, c, h, f)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, b, g, d, h, g, c)),
+				_elm_lang$core$Basics$toString(
+				A6(_user$project$Question$silly1, b, f, h, c, g, d))
+			]);
+		var _p2 = A2(
+			_elm_lang$core$List$partition,
+			function (d) {
+				return _elm_lang$core$Native_Utils.eq(d, answer$);
+			},
+			_user$project$RandomStuff$compressList(distractors));
+		var distractors$ = _p2._1;
+		return {
+			question: question$,
+			distractors: A2(
+				_elm_lang$core$List$map,
+				function (dis) {
+					return {ctor: '_Tuple2', _0: dis, _1: 'Incorrect.'};
+				},
+				distractors$),
+			answer: {ctor: '_Tuple2', _0: answer$, _1: 'Correct'},
+			format: _user$project$Question$MultipleChoice
+		};
+	});
+var _user$project$Question$FillInTheBlank = {ctor: 'FillInTheBlank'};
+var _user$project$Question$emptyQuestion = {
+	question: _elm_lang$core$Native_List.fromArray(
+		[]),
+	distractors: _elm_lang$core$Native_List.fromArray(
+		[]),
+	answer: {ctor: '_Tuple2', _0: '', _1: ''},
+	format: _user$project$Question$FillInTheBlank
+};

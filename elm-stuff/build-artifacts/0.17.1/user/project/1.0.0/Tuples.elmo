@@ -1,0 +1,223 @@
+var _user$project$Tuples$tupleTo = F4(
+	function (tupItemTo, leftDelimeter, rightDelimeter, tup) {
+		var helperFunc = function (tup$) {
+			var _p0 = tup$;
+			if (_p0.ctor === '[]') {
+				return '';
+			} else {
+				if (_p0._1.ctor === '[]') {
+					return tupItemTo(_p0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						tupItemTo(_p0._0),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							', ',
+							helperFunc(_p0._1)));
+				}
+			}
+		};
+		return _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$List$length(tup),
+			1) ? helperFunc(tup) : A2(
+			_elm_lang$core$Basics_ops['++'],
+			leftDelimeter,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				helperFunc(tup),
+				rightDelimeter));
+	});
+var _user$project$Tuples$tupleOfTuplesTo = F4(
+	function (tupItemTo, leftDelimeter, rightDelimeter, tups) {
+		var helperFunc = function (tups$) {
+			var _p1 = tups$;
+			if (_p1.ctor === '[]') {
+				return '';
+			} else {
+				if (_p1._1.ctor === '[]') {
+					return A4(_user$project$Tuples$tupleTo, tupItemTo, leftDelimeter, rightDelimeter, _p1._0);
+				} else {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						A4(_user$project$Tuples$tupleTo, tupItemTo, leftDelimeter, rightDelimeter, _p1._0),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							', ',
+							helperFunc(_p1._1)));
+				}
+			}
+		};
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			leftDelimeter,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				helperFunc(tups),
+				rightDelimeter));
+	});
+var _user$project$Tuples$tupleItemToString = function (t) {
+	var _p2 = t;
+	switch (_p2.ctor) {
+		case 'RandomInt':
+			return _elm_lang$core$Basics$toString(_p2._0);
+		case 'RandomString':
+			return _elm_lang$core$Basics$toString(_p2._0);
+		default:
+			return _elm_lang$core$Basics$toString(_p2._0);
+	}
+};
+var _user$project$Tuples$tupleToString = function (tup) {
+	return A4(_user$project$Tuples$tupleTo, _user$project$Tuples$tupleItemToString, '(', ')', tup);
+};
+var _user$project$Tuples$tupleToListString = function (tup) {
+	return A4(_user$project$Tuples$tupleTo, _user$project$Tuples$tupleItemToString, '[', ']', tup);
+};
+var _user$project$Tuples$tupleOfTuplesToString = function (tups) {
+	return A4(_user$project$Tuples$tupleOfTuplesTo, _user$project$Tuples$tupleItemToString, '(', ')', tups);
+};
+var _user$project$Tuples$tupleToListOfStrings = function (tup) {
+	var _p3 = tup;
+	if (_p3.ctor === '[]') {
+		return _elm_lang$core$Native_List.fromArray(
+			[]);
+	} else {
+		return A2(
+			_elm_lang$core$List_ops['::'],
+			_user$project$Tuples$tupleItemToString(_p3._0),
+			_user$project$Tuples$tupleToListOfStrings(_p3._1));
+	}
+};
+var _user$project$Tuples$tupleOfTuplesToFlatListOfStrings = function (tups) {
+	var _p4 = tups;
+	if (_p4.ctor === '[]') {
+		return _elm_lang$core$Native_List.fromArray(
+			[]);
+	} else {
+		return A2(
+			_elm_lang$core$List$append,
+			_user$project$Tuples$tupleToListOfStrings(_p4._0),
+			_user$project$Tuples$tupleOfTuplesToFlatListOfStrings(_p4._1));
+	}
+};
+var _user$project$Tuples$tupleItemToWrongTypeString = function (t) {
+	var _p5 = t;
+	switch (_p5.ctor) {
+		case 'RandomInt':
+			return 'Bool';
+		case 'RandomString':
+			return 'Int';
+		default:
+			return 'String';
+	}
+};
+var _user$project$Tuples$tupleToWrongTypeString = function (tup) {
+	return A4(_user$project$Tuples$tupleTo, _user$project$Tuples$tupleItemToWrongTypeString, '(', ')', tup);
+};
+var _user$project$Tuples$tupleItemToTypeString = function (t) {
+	var _p6 = t;
+	switch (_p6.ctor) {
+		case 'RandomInt':
+			return 'Int';
+		case 'RandomString':
+			return 'String';
+		default:
+			return 'Bool';
+	}
+};
+var _user$project$Tuples$tupleToTypeString = function (tup) {
+	return A4(_user$project$Tuples$tupleTo, _user$project$Tuples$tupleItemToTypeString, '(', ')', tup);
+};
+var _user$project$Tuples$RandomBool = function (a) {
+	return {ctor: 'RandomBool', _0: a};
+};
+var _user$project$Tuples$RandomString = function (a) {
+	return {ctor: 'RandomString', _0: a};
+};
+var _user$project$Tuples$extractItemFromTuple = F2(
+	function (index, tup) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$Tuples$RandomString('foo'),
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index - 1, tup)));
+	});
+var _user$project$Tuples$extractTupleFromTuple = F2(
+	function (index, tups) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_user$project$Tuples$RandomString('foo')
+				]),
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index - 1, tups)));
+	});
+var _user$project$Tuples$RandomInt = function (a) {
+	return {ctor: 'RandomInt', _0: a};
+};
+var _user$project$Tuples$randomTupleItem = function (randomValues) {
+	var rType = A3(
+		_user$project$RandomStuff$pickOne,
+		randomValues,
+		_elm_lang$core$Native_List.fromArray(
+			[1, 2, 3]),
+		1);
+	var randStrings = _elm_lang$core$Native_List.fromArray(
+		['dog', 'cat', 'pig', 'moose', 'cow', 'bird']);
+	var _p7 = rType;
+	switch (_p7) {
+		case 1:
+			var rVal = A3(
+				_user$project$RandomStuff$pickOne,
+				A2(_elm_lang$core$List$drop, 1, randomValues),
+				_elm_lang$core$Native_List.fromArray(
+					[1, 2]),
+				1);
+			return _elm_lang$core$Native_Utils.eq(rVal, 1) ? _user$project$Tuples$RandomBool(true) : _user$project$Tuples$RandomBool(false);
+		case 2:
+			var rVal = A3(
+				_user$project$RandomStuff$pickOne,
+				A2(_elm_lang$core$List$drop, 1, randomValues),
+				_elm_lang$core$Native_List.range(0, 9),
+				1);
+			return _user$project$Tuples$RandomInt(rVal);
+		default:
+			var rVal = A3(
+				_user$project$RandomStuff$pickOne,
+				A2(_elm_lang$core$List$drop, 1, randomValues),
+				randStrings,
+				'cat');
+			return _user$project$Tuples$RandomString(rVal);
+	}
+};
+var _user$project$Tuples$randomTuple = F3(
+	function (randomValues, lengths, defVal) {
+		var tupleLen = A3(_user$project$RandomStuff$pickOne, randomValues, lengths, defVal);
+		var helperFunc = function (cnt) {
+			return (_elm_lang$core$Native_Utils.cmp(cnt, tupleLen) > -1) ? _elm_lang$core$Native_List.fromArray(
+				[]) : A2(
+				_elm_lang$core$List_ops['::'],
+				_user$project$Tuples$randomTupleItem(
+					A2(_elm_lang$core$List$drop, (2 * cnt) + 1, randomValues)),
+				helperFunc(cnt + 1));
+		};
+		return helperFunc(0);
+	});
+var _user$project$Tuples$randomTupleOfTuples = F3(
+	function (randomValues, lengths, defVal) {
+		return _elm_lang$core$Native_List.fromArray(
+			[
+				A3(_user$project$Tuples$randomTuple, randomValues, lengths, defVal),
+				A3(
+				_user$project$Tuples$randomTuple,
+				A2(_elm_lang$core$List$drop, 7, randomValues),
+				lengths,
+				defVal),
+				A3(
+				_user$project$Tuples$randomTuple,
+				A2(_elm_lang$core$List$drop, 14, randomValues),
+				lengths,
+				defVal)
+			]);
+	});
