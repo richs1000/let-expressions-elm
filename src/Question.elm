@@ -69,7 +69,8 @@ newQuestion randomValues index =
             pickOne (List.drop 5 randomValues) [2..4] 1
 
         question' =
-            [ "What is the value of ans after the following ML expressions are evaluated?"
+            [ "What is the value of ans after the following "
+            , "ML expressions are evaluated?"
             , ""
             , "fun silly1 (z : int) ="
             , "    let"
